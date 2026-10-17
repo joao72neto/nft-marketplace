@@ -1,11 +1,5 @@
 import axios, { type AxiosInstance, type AxiosError } from "axios";
-
-export interface ApiErrorResponse {
-  message: string;
-  code?: string;
-  status?: number;
-  errors?: Record<string, string[]>;
-}
+import type { ApiErrorResponse } from "@/contracts";
 
 export const apiClient: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "/api",
@@ -20,8 +14,9 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError<ApiErrorResponse>) => {
     const errorData: ApiErrorResponse = error.response?.data || {
+      code: "TRANSIENT_ERROR",
       message: error.message || "Erro inesperado na comunicação com a API",
-      status: error.response?.status,
+      timestamp: new Date().toISOString(),
     };
     return Promise.reject(errorData);
   },
