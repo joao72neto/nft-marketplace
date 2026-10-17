@@ -1,10 +1,69 @@
-* {
-    margin: 0;
-    padding: 0;
+@import "tailwindcss";
+
+@import "@fontsource/roboto-mono/400.css";
+@import "@fontsource/roboto-mono/500.css";
+@import "@fontsource/roboto-mono/700.css";
+
+@theme {
+    --font-mono: "Roboto Mono", monospace;
+    --font-sans: "Roboto Mono", monospace;
+
+    --color-ink: #140d0a;
+    --color-foreground: #f5f1eb;
+    --color-primary: #d28a4c;
+    --color-accent: #e89b55;
+    --color-secondary-text: #cfb28c;
+    --color-secondary-color: #b39463;
+    --color-surface-card: #241612;
+    --color-surface-raised: #2f1d15;
+    --color-surface-dark: #38220f;
+    --color-border-dark: #3f2319;
+    --color-border-soft: #55321f;
+    --color-coral: #f0805f;
+
+    --shadow-subtle: 0 0 20px 0 rgba(10, 6, 4, 0.45);
 }
 
-html,
+:root {
+    --color-ink: #140d0a;
+    --color-foreground: #f5f1eb;
+    --color-primary: #d28a4c;
+    --color-accent: #e89b55;
+    --color-secondary-text: #cfb28c;
+    --color-secondary-color: #b39463;
+    --color-surface-card: #241612;
+    --color-surface-raised: #2f1d15;
+    --color-surface-dark: #38220f;
+    --color-border-dark: #3f2319;
+    --color-border-soft: #55321f;
+    --color-coral: #f0805f;
+}
+
 body {
-    background-color: #222;
-    color: white;
+    background-color: var(--color-ink);
+    color: var(--color-foreground);
+    font-family: "Roboto Mono", monospace;
+    font-feature-settings:
+        "rlig" 1,
+        "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+/* Accessible focus visible ring */
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }
