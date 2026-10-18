@@ -1,6 +1,12 @@
 import { http, HttpResponse } from "msw";
-import type { ApiErrorResponse, AuthResponse, LoginRequest, RegisterRequest, UserDTO } from "@/contracts";
-import { addUser, findUserByEmail, mergeGuestCartIntoUser } from "../db";
+import type {
+  ApiErrorResponse,
+  AuthResponse,
+  LoginRequest,
+  RegisterRequest,
+  UserDTO,
+} from "@/contracts";
+import { addUser, findUserByEmail } from "../db";
 import { getActiveScenario } from "../scenarios/active-scenario";
 import { processScenarioMiddleware } from "../scenarios/middleware";
 import { authenticateRequest, createFakeJwt } from "./jwt.helper";
@@ -19,7 +25,12 @@ export const authHandlers = [
       const errorResponse: ApiErrorResponse = {
         code: "CONFLICT",
         message: "O e-mail informado já está cadastrado na plataforma.",
-        details: [{ field: "email", message: "E-mail já em uso por outro colecionador." }],
+        details: [
+          {
+            field: "email",
+            message: "E-mail já em uso por outro colecionador.",
+          },
+        ],
         timestamp: new Date().toISOString(),
       };
       return HttpResponse.json(errorResponse, { status: 409 });
@@ -30,9 +41,15 @@ export const authHandlers = [
         code: "VALIDATION_ERROR",
         message: "Todos os campos obrigatórios devem ser preenchidos.",
         details: [
-          ...(!body.name ? [{ field: "name", message: "Nome é obrigatório." }] : []),
-          ...(!body.email ? [{ field: "email", message: "E-mail é obrigatório." }] : []),
-          ...(!body.password ? [{ field: "password", message: "Senha é obrigatória." }] : []),
+          ...(!body.name
+            ? [{ field: "name", message: "Nome é obrigatório." }]
+            : []),
+          ...(!body.email
+            ? [{ field: "email", message: "E-mail é obrigatório." }]
+            : []),
+          ...(!body.password
+            ? [{ field: "password", message: "Senha é obrigatória." }]
+            : []),
         ],
         timestamp: new Date().toISOString(),
       };
@@ -65,9 +82,6 @@ export const authHandlers = [
 
     const token = createFakeJwt(newUser);
     const expiresAt = new Date(Date.now() + 3600 * 1000).toISOString();
-
-    // Merge de carrinho se houver itens no visitante
-    mergeGuestCartIntoUser(newUser.id);
 
     const response: AuthResponse = {
       user: newUser,
@@ -112,9 +126,6 @@ export const authHandlers = [
 
     const token = createFakeJwt(userRecord);
     const expiresAt = new Date(Date.now() + 3600 * 1000).toISOString();
-
-    // Merge de carrinho de visitante para o usuário logado (Decisão 4)
-    mergeGuestCartIntoUser(userRecord.id);
 
     const response: AuthResponse = {
       user: {

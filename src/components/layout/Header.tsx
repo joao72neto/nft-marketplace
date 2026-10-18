@@ -24,7 +24,6 @@ export function Header({ cartCount = 0 }: HeaderProps) {
     <header className="sticky top-0 z-40 w-full bg-ink/95 backdrop-blur-md">
       <div className="container max-w-300 mx-auto px-4 lg:px-0">
         <div className="flex h-20 items-center justify-between gap-4 border-b border-primary/20">
-          {/* Logo & Desktop Nav */}
           <div className="flex items-center gap-10">
             <Link
               to="/"
@@ -81,7 +80,6 @@ export function Header({ cartCount = 0 }: HeaderProps) {
             </nav>
           </div>
 
-          {/* Desktop Right Actions */}
           <div className="hidden lg:flex items-center gap-4">
             <button
               type="button"
@@ -124,7 +122,6 @@ export function Header({ cartCount = 0 }: HeaderProps) {
             )}
           </div>
 
-          {/* Mobile Right Actions */}
           <div className="flex lg:hidden items-center gap-1">
             <button
               type="button"

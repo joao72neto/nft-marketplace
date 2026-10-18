@@ -65,7 +65,10 @@ export const authStorage = {
     try {
       localStorage.setItem(TOKEN_STORAGE_KEY, token);
     } catch (e) {
-      console.warn("[AuthStorage] Falha ao persistir token no localStorage:", e);
+      console.warn(
+        "[AuthStorage] Falha ao persistir token no localStorage:",
+        e,
+      );
     }
   },
 

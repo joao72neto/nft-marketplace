@@ -24,8 +24,10 @@ const VALID_SCENARIOS: Set<ScenarioId> = new Set([
  * 2. localStorage do Painel Dev (greenmint_dev_scenario)
  * 3. Variável de ambiente VITE_MOCK_SCENARIO (padrão: "default")
  */
-export function getActiveScenario(): { scenario: ScenarioId; source: "url" | "storage" | "env" } {
-  // 1. URL search param
+export function getActiveScenario(): {
+  scenario: ScenarioId;
+  source: "url" | "storage" | "env";
+} {
   if (typeof window !== "undefined" && window.location?.search) {
     const params = new URLSearchParams(window.location.search);
     const fromUrl = params.get("scenario") as ScenarioId | null;
@@ -34,10 +36,11 @@ export function getActiveScenario(): { scenario: ScenarioId; source: "url" | "st
     }
   }
 
-  // 2. LocalStorage (Painel Dev)
   if (typeof window !== "undefined" && window.localStorage) {
     try {
-      const fromStorage = window.localStorage.getItem(DEV_SCENARIO_KEY) as ScenarioId | null;
+      const fromStorage = window.localStorage.getItem(
+        DEV_SCENARIO_KEY,
+      ) as ScenarioId | null;
       if (fromStorage && VALID_SCENARIOS.has(fromStorage)) {
         return { scenario: fromStorage, source: "storage" };
       }
@@ -46,8 +49,8 @@ export function getActiveScenario(): { scenario: ScenarioId; source: "url" | "st
     }
   }
 
-  // 3. Env fallback
-  const fromEnv = (import.meta.env?.VITE_MOCK_SCENARIO as ScenarioId) || "default";
+  const fromEnv =
+    (import.meta.env?.VITE_MOCK_SCENARIO as ScenarioId) || "default";
   if (VALID_SCENARIOS.has(fromEnv)) {
     return { scenario: fromEnv, source: "env" };
   }
@@ -66,7 +69,11 @@ export function setActiveDevScenario(scenario: ScenarioId): void {
 }
 
 export function getNetworkConditions(): NetworkConditions {
-  const defaultConditions: NetworkConditions = { latencyMs: 80, jitterMs: 20, failureRate: 0 };
+  const defaultConditions: NetworkConditions = {
+    latencyMs: 80,
+    jitterMs: 20,
+    failureRate: 0,
+  };
   if (typeof window !== "undefined" && window.localStorage) {
     try {
       const saved = window.localStorage.getItem(DEV_NETWORK_KEY);
@@ -80,7 +87,9 @@ export function getNetworkConditions(): NetworkConditions {
   return defaultConditions;
 }
 
-export function setNetworkConditions(conditions: Partial<NetworkConditions>): void {
+export function setNetworkConditions(
+  conditions: Partial<NetworkConditions>,
+): void {
   const current = getNetworkConditions();
   const updated = { ...current, ...conditions };
   if (typeof window !== "undefined" && window.localStorage) {

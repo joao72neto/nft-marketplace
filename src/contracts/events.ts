@@ -1,5 +1,4 @@
 import type { EthAmount } from "./common";
-import type { OrderStatus } from "./order";
 
 export interface BaseSocketEvent<TResource extends string, TData> {
   eventId: string;
@@ -20,11 +19,9 @@ export type NftUpdatedEvent = BaseSocketEvent<
   }
 >;
 
-export type OrderUpdatedEvent = BaseSocketEvent<
-  "order",
+export type AuthSessionExpiredEvent = BaseSocketEvent<
+  "auth",
   {
-    status: OrderStatus;
-    txHash?: string;
-    failureReason?: string | null;
+    reason: string;
   }
 >;

@@ -23,7 +23,9 @@ interface CatalogMobileFiltersSheetProps {
   totalResultsCount?: number;
 }
 
-export const CatalogMobileFiltersSheet: React.FC<CatalogMobileFiltersSheetProps> = ({
+export const CatalogMobileFiltersSheet: React.FC<
+  CatalogMobileFiltersSheetProps
+> = ({
   open,
   onOpenChange,
   selectedCategory,
@@ -81,7 +83,10 @@ export const CatalogMobileFiltersSheet: React.FC<CatalogMobileFiltersSheetProps>
             onClick={() => onOpenChange(false)}
             className="flex-1 text-xs font-bold"
           >
-            Ver {totalResultsCount !== undefined ? `(${totalResultsCount})` : "Resultados"}
+            Ver{" "}
+            {totalResultsCount !== undefined
+              ? `(${totalResultsCount})`
+              : "Resultados"}
           </Button>
         </div>
       </SheetContent>

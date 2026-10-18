@@ -95,7 +95,8 @@ export const CatalogSidebarFilters: React.FC<CatalogSidebarFiltersProps> = ({
   };
 
   const handleNetworkSelect = (val: string) => {
-    const nextVal = (selectedNetwork || internalNetwork) === val ? undefined : val;
+    const nextVal =
+      (selectedNetwork || internalNetwork) === val ? undefined : val;
     setInternalNetwork(nextVal);
     onNetworkChange?.(nextVal);
   };
@@ -123,9 +124,9 @@ export const CatalogSidebarFilters: React.FC<CatalogSidebarFiltersProps> = ({
 
   const hasActiveFilters = Boolean(
     selectedCategory ||
-      (priceMin && priceMin !== "0.02") ||
-      (priceMax && priceMax !== "12.30") ||
-      internalNetwork,
+    (priceMin && priceMin !== "0.02") ||
+    (priceMax && priceMax !== "12.30") ||
+    internalNetwork,
   );
 
   return (
@@ -290,4 +291,3 @@ export const CatalogSidebarFilters: React.FC<CatalogSidebarFiltersProps> = ({
     </aside>
   );
 };
-

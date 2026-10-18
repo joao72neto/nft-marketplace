@@ -28,8 +28,10 @@ apiClient.interceptors.response.use(
       timestamp: new Date().toISOString(),
     };
 
-    // Se o token estiver inválido/expirado em rota privada
-    if (error.response?.status === 401 && !error.config?.url?.includes("/auth/login")) {
+    if (
+      error.response?.status === 401 &&
+      !error.config?.url?.includes("/auth/login")
+    ) {
       authStorage.removeToken();
       if (typeof window !== "undefined") {
         window.dispatchEvent(new CustomEvent("greenmint:auth:unauthorized"));

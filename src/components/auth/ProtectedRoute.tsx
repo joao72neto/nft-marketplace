@@ -40,11 +40,10 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
           <div className="w-12 h-12 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto text-primary">
             <LogoutIcon size={24} />
           </div>
-          <h2 className="text-xl font-bold text-foreground">
-            Acesso Restrito
-          </h2>
+          <h2 className="text-xl font-bold text-foreground">Acesso Restrito</h2>
           <p className="text-xs text-secondary-text leading-relaxed">
-            Você precisa estar conectado com sua conta para acessar esta seção de colecionador.
+            Você precisa estar conectado com sua conta para acessar esta seção
+            de colecionador.
           </p>
           <Button
             type="button"

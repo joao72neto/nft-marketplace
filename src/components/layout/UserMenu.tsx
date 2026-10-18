@@ -50,17 +50,10 @@ export const UserMenu: React.FC = () => {
         aria-haspopup="true"
         aria-label="Menu do usuário"
       >
-        {user.avatarUrl ? (
-          <img
-            src={user.avatarUrl}
-            alt={user.name}
-            className="w-7 h-7 rounded-full object-cover border border-primary/50"
-          />
-        ) : (
-          <div className="w-7 h-7 rounded-full bg-primary/20 border border-primary/60 text-primary flex items-center justify-center text-xs font-bold">
-            {initials}
-          </div>
-        )}
+        <div className="w-7 h-7 rounded-full bg-primary/20 border border-primary/60 text-primary flex items-center justify-center text-xs font-bold">
+          {initials}
+        </div>
+
         <span className="text-xs font-bold text-foreground max-w-[120px] truncate">
           {user.name}
         </span>

@@ -12,7 +12,10 @@ export function getStoredItem<T>(key: string, defaultValue: T): T {
       }
     }
   } catch (error) {
-    console.warn(`[Mock DB Storage] Falha ao ler "${key}" do localStorage. Utilizando memória.`, error);
+    console.warn(
+      `[Mock DB Storage] Falha ao ler "${key}" do localStorage. Utilizando memória.`,
+      error,
+    );
   }
 
   const memoryItem = memoryFallbackStore.get(key);
@@ -39,7 +42,10 @@ export function setStoredItem<T>(key: string, value: T): void {
       return;
     }
   } catch (error) {
-    console.warn(`[Mock DB Storage] Falha ao gravar "${key}" no localStorage (cota ou bloqueio). Utilizando memória.`, error);
+    console.warn(
+      `[Mock DB Storage] Falha ao gravar "${key}" no localStorage (cota ou bloqueio). Utilizando memória.`,
+      error,
+    );
   }
 
   memoryFallbackStore.set(key, serialized);
@@ -75,7 +81,10 @@ export function clearMockStorage(): void {
       keysToRemove.forEach((k) => window.localStorage.removeItem(k));
     }
   } catch (error) {
-    console.warn("[Mock DB Storage] Erro ao limpar chaves do localStorage.", error);
+    console.warn(
+      "[Mock DB Storage] Erro ao limpar chaves do localStorage.",
+      error,
+    );
   }
 
   for (const key of memoryFallbackStore.keys()) {

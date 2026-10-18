@@ -17,13 +17,11 @@ export const AuthModal: React.FC = () => {
   const { isOpen, mode, redirectUrl, setMode, closeAuthModal } = useAuthModal();
   const navigate = useNavigate();
 
-  // Estados de formulário de login
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [loginError, setLoginError] = useState<string | null>(null);
   const [isLoginPending, setIsLoginPending] = useState(false);
 
-  // Estados de formulário de cadastro
   const [registerName, setRegisterName] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
@@ -34,7 +32,9 @@ export const AuthModal: React.FC = () => {
     password?: string;
     confirmPassword?: string;
   }>({});
-  const [registerGeneralError, setRegisterGeneralError] = useState<string | null>(null);
+  const [registerGeneralError, setRegisterGeneralError] = useState<
+    string | null
+  >(null);
   const [isRegisterPending, setIsRegisterPending] = useState(false);
 
   const handleClose = () => {
@@ -68,7 +68,7 @@ export const AuthModal: React.FC = () => {
     setIsLoginPending(true);
     try {
       await login(trimmedEmail, loginPassword);
-      closeAuthModal();
+      handleClose();
       if (redirectUrl) {
         navigate({ to: decodeURIComponent(redirectUrl) as "/" });
       }
@@ -77,7 +77,9 @@ export const AuthModal: React.FC = () => {
       if (apiError.code === "UNAUTHORIZED" || apiError.message) {
         setLoginError(apiError.message || "E-mail ou senha incorretos.");
       } else {
-        setLoginError("Não foi possível autenticar. Tente novamente mais tarde.");
+        setLoginError(
+          "Não foi possível autenticar. Tente novamente mais tarde.",
+        );
       }
       setLoginPassword("");
     } finally {
@@ -120,8 +122,12 @@ export const AuthModal: React.FC = () => {
 
     setIsRegisterPending(true);
     try {
-      await register(registerName.trim(), registerEmail.trim(), registerPassword);
-      closeAuthModal();
+      await register(
+        registerName.trim(),
+        registerEmail.trim(),
+        registerPassword,
+      );
+      handleClose();
       if (redirectUrl) {
         navigate({ to: decodeURIComponent(redirectUrl) as "/" });
       }
@@ -143,48 +149,14 @@ export const AuthModal: React.FC = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
-      <DialogContent className="max-w-[480px] w-full border-border-dark bg-surface-card p-6 sm:p-8 rounded-xl shadow-2xl font-mono">
-        {/* Abas Superiores de Alternância: Entrar vs Criar conta */}
-        <div className="flex border-b border-border-dark mb-6">
-          <button
-            type="button"
-            onClick={() => {
-              setMode("login");
-              setLoginError(null);
-            }}
-            className={`flex-1 pb-3 text-sm font-bold text-center border-b-2 transition-all ${
-              mode === "login"
-                ? "border-primary text-primary"
-                : "border-transparent text-secondary-text hover:text-foreground"
-            }`}
-          >
-            Entrar
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setMode("register");
-              setRegisterGeneralError(null);
-              setRegisterFieldErrors({});
-            }}
-            className={`flex-1 pb-3 text-sm font-bold text-center border-b-2 transition-all ${
-              mode === "register"
-                ? "border-primary text-primary"
-                : "border-transparent text-secondary-text hover:text-foreground"
-            }`}
-          >
-            Criar conta
-          </button>
-        </div>
-
-        {/* ======================= MODO: LOGIN ======================= */}
+      <DialogContent className="max-w-[460px] sm:max-w-[480px] w-[calc(100%-2rem)] border-border-dark bg-surface-card p-6 sm:p-10 rounded-xl shadow-2xl font-mono">
         {mode === "login" && (
           <div className="space-y-6">
-            <DialogHeader className="text-left space-y-1.5">
-              <DialogTitle className="text-2xl font-bold text-foreground tracking-tight">
+            <DialogHeader className="text-center space-y-2 mb-2 sm:mb-4">
+              <DialogTitle className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight text-center">
                 Acesse sua conta
               </DialogTitle>
-              <DialogDescription className="text-xs text-secondary-text">
+              <DialogDescription className="text-xs sm:text-sm text-secondary-text text-center">
                 Entre para gerenciar sua coleção, favoritos e carteiras.
               </DialogDescription>
             </DialogHeader>
@@ -199,13 +171,17 @@ export const AuthModal: React.FC = () => {
               </div>
             )}
 
-            <form onSubmit={handleLoginSubmit} className="space-y-4" noValidate>
+            <form
+              onSubmit={handleLoginSubmit}
+              className="space-y-4 sm:space-y-5"
+              noValidate
+            >
               <div className="space-y-1.5 text-left">
                 <label
                   htmlFor="modal-login-email"
                   className="block text-xs uppercase tracking-wider text-secondary-text font-bold"
                 >
-                  E-mail
+                  E-mail <span className="text-coral">*</span>
                 </label>
                 <Input
                   id="modal-login-email"
@@ -218,7 +194,7 @@ export const AuthModal: React.FC = () => {
                   disabled={isLoginPending}
                   required
                   aria-invalid={Boolean(loginError)}
-                  className="h-11"
+                  className="h-11 bg-ink border-border-dark text-foreground placeholder:text-secondary-color focus-visible:border-primary"
                 />
               </div>
 
@@ -228,14 +204,14 @@ export const AuthModal: React.FC = () => {
                     htmlFor="modal-login-password"
                     className="block text-xs uppercase tracking-wider text-secondary-text font-bold"
                   >
-                    Senha
+                    Senha <span className="text-coral">*</span>
                   </label>
                   <button
                     type="button"
                     onClick={() => setMode("forgot")}
                     className="text-xs text-primary hover:text-accent hover:underline transition-colors focus:outline-none"
                   >
-                    Esqueceu a senha?
+                    Esqueceu sua senha?
                   </button>
                 </div>
                 <Input
@@ -249,7 +225,7 @@ export const AuthModal: React.FC = () => {
                   disabled={isLoginPending}
                   required
                   aria-invalid={Boolean(loginError)}
-                  className="h-11"
+                  className="h-11 bg-ink border-border-dark text-foreground placeholder:text-secondary-color focus-visible:border-primary"
                 />
               </div>
 
@@ -258,7 +234,7 @@ export const AuthModal: React.FC = () => {
                 variant="primary"
                 size="lg"
                 disabled={isLoginPending}
-                className="w-full h-11 text-sm font-bold tracking-wider mt-2"
+                className="w-full h-11 text-sm font-bold tracking-wider uppercase mt-4"
               >
                 {isLoginPending ? (
                   <span className="flex items-center gap-2">
@@ -271,16 +247,15 @@ export const AuthModal: React.FC = () => {
               </Button>
             </form>
 
-            <div className="pt-4 border-t border-border-dark text-center text-xs text-secondary-text">
+            <div className="pt-6 border-t border-border-dark text-center text-xs sm:text-sm text-secondary-text">
               <span>Ainda não tem conta? </span>
               <button
                 type="button"
                 onClick={() => {
                   setMode("register");
-                  setRegisterGeneralError(null);
-                  setRegisterFieldErrors({});
+                  setLoginError(null);
                 }}
-                className="font-bold text-accent hover:underline ml-1"
+                className="font-bold text-primary hover:text-accent hover:underline ml-1"
               >
                 Criar conta
               </button>
@@ -288,14 +263,13 @@ export const AuthModal: React.FC = () => {
           </div>
         )}
 
-        {/* ======================= MODO: CRIAR CONTA ======================= */}
         {mode === "register" && (
           <div className="space-y-5">
-            <DialogHeader className="text-left space-y-1.5">
-              <DialogTitle className="text-2xl font-bold text-foreground tracking-tight">
+            <DialogHeader className="text-center space-y-2 mb-2 sm:mb-4">
+              <DialogTitle className="text-2xl sm:text-3xl font-bold text-foreground tracking-tight text-center">
                 Crie sua conta de colecionador
               </DialogTitle>
-              <DialogDescription className="text-xs text-secondary-text">
+              <DialogDescription className="text-xs sm:text-sm text-secondary-text text-center">
                 Junte-se à Kurio para colecionar e negociar ativos digitais.
               </DialogDescription>
             </DialogHeader>
@@ -309,13 +283,17 @@ export const AuthModal: React.FC = () => {
               </div>
             )}
 
-            <form onSubmit={handleRegisterSubmit} className="space-y-3.5" noValidate>
+            <form
+              onSubmit={handleRegisterSubmit}
+              className="space-y-3.5"
+              noValidate
+            >
               <div className="space-y-1 text-left">
                 <label
                   htmlFor="modal-register-name"
                   className="block text-xs uppercase tracking-wider text-secondary-text font-bold"
                 >
-                  Nome completo
+                  Nome completo <span className="text-coral">*</span>
                 </label>
                 <Input
                   id="modal-register-name"
@@ -330,7 +308,7 @@ export const AuthModal: React.FC = () => {
                   aria-describedby={
                     registerFieldErrors.name ? "modal-name-error" : undefined
                   }
-                  className="h-10"
+                  className="h-10 bg-ink border-border-dark text-foreground placeholder:text-secondary-color focus-visible:border-primary"
                 />
                 {registerFieldErrors.name && (
                   <p id="modal-name-error" className="text-xs text-coral">
@@ -344,7 +322,7 @@ export const AuthModal: React.FC = () => {
                   htmlFor="modal-register-email"
                   className="block text-xs uppercase tracking-wider text-secondary-text font-bold"
                 >
-                  E-mail
+                  E-mail <span className="text-coral">*</span>
                 </label>
                 <Input
                   id="modal-register-email"
@@ -359,10 +337,13 @@ export const AuthModal: React.FC = () => {
                   aria-describedby={
                     registerFieldErrors.email ? "modal-email-error" : undefined
                   }
-                  className="h-10"
+                  className="h-10 bg-ink border-border-dark text-foreground placeholder:text-secondary-color focus-visible:border-primary"
                 />
                 {registerFieldErrors.email && (
-                  <p id="modal-email-error" className="text-xs text-coral font-medium">
+                  <p
+                    id="modal-email-error"
+                    className="text-xs text-coral font-medium"
+                  >
                     {registerFieldErrors.email}
                   </p>
                 )}
@@ -373,7 +354,8 @@ export const AuthModal: React.FC = () => {
                   htmlFor="modal-register-password"
                   className="block text-xs uppercase tracking-wider text-secondary-text font-bold"
                 >
-                  Senha (mínimo 8 caracteres)
+                  Senha (mínimo 8 caracteres){" "}
+                  <span className="text-coral">*</span>
                 </label>
                 <Input
                   id="modal-register-password"
@@ -386,9 +368,11 @@ export const AuthModal: React.FC = () => {
                   disabled={isRegisterPending}
                   aria-invalid={Boolean(registerFieldErrors.password)}
                   aria-describedby={
-                    registerFieldErrors.password ? "modal-password-error" : undefined
+                    registerFieldErrors.password
+                      ? "modal-password-error"
+                      : undefined
                   }
-                  className="h-10"
+                  className="h-10 bg-ink border-border-dark text-foreground placeholder:text-secondary-color focus-visible:border-primary"
                 />
                 {registerFieldErrors.password && (
                   <p id="modal-password-error" className="text-xs text-coral">
@@ -402,7 +386,7 @@ export const AuthModal: React.FC = () => {
                   htmlFor="modal-register-confirm"
                   className="block text-xs uppercase tracking-wider text-secondary-text font-bold"
                 >
-                  Confirmar senha
+                  Confirmar senha <span className="text-coral">*</span>
                 </label>
                 <Input
                   id="modal-register-confirm"
@@ -419,7 +403,7 @@ export const AuthModal: React.FC = () => {
                       ? "modal-confirm-error"
                       : undefined
                   }
-                  className="h-10"
+                  className="h-10 bg-ink border-border-dark text-foreground placeholder:text-secondary-color focus-visible:border-primary"
                 />
                 {registerFieldErrors.confirmPassword && (
                   <p id="modal-confirm-error" className="text-xs text-coral">
@@ -433,7 +417,7 @@ export const AuthModal: React.FC = () => {
                 variant="primary"
                 size="lg"
                 disabled={isRegisterPending}
-                className="w-full h-11 text-sm font-bold tracking-wider mt-2"
+                className="w-full h-11 text-sm font-bold tracking-wider uppercase mt-4"
               >
                 {isRegisterPending ? (
                   <span className="flex items-center gap-2">
@@ -446,15 +430,16 @@ export const AuthModal: React.FC = () => {
               </Button>
             </form>
 
-            <div className="pt-4 border-t border-border-dark text-center text-xs text-secondary-text">
+            <div className="pt-6 border-t border-border-dark text-center text-xs sm:text-sm text-secondary-text">
               <span>Já possui uma conta? </span>
               <button
                 type="button"
                 onClick={() => {
                   setMode("login");
-                  setLoginError(null);
+                  setRegisterGeneralError(null);
+                  setRegisterFieldErrors({});
                 }}
-                className="font-bold text-accent hover:underline ml-1"
+                className="font-bold text-primary hover:text-accent hover:underline ml-1"
               >
                 Entrar
               </button>
@@ -462,16 +447,15 @@ export const AuthModal: React.FC = () => {
           </div>
         )}
 
-        {/* ======================= MODO: ESQUECEU A SENHA ======================= */}
         {mode === "forgot" && (
           <div className="space-y-5">
-            <DialogHeader className="text-left space-y-1.5">
-              <DialogTitle className="text-2xl font-bold text-accent tracking-tight">
+            <DialogHeader className="text-center space-y-2 mb-2 sm:mb-4">
+              <DialogTitle className="text-2xl sm:text-3xl font-bold text-accent tracking-tight text-center">
                 Recuperação de Acesso
               </DialogTitle>
-              <DialogDescription className="text-xs text-secondary-text leading-relaxed">
-                O marketplace opera em ambiente 100% simulado com Mock Service Worker.
-                Não enviamos e-mails externos de redefinição de senha.
+              <DialogDescription className="text-xs sm:text-sm text-secondary-text text-center leading-relaxed">
+                O marketplace opera em ambiente 100% simulado com Mock Service
+                Worker. Não enviamos e-mails externos de redefinição de senha.
               </DialogDescription>
             </DialogHeader>
 
@@ -508,12 +492,12 @@ export const AuthModal: React.FC = () => {
                 setLoginEmail("alice@greenmint.io");
                 setLoginPassword("Senha123!");
               }}
-              className="w-full h-11 text-sm font-bold tracking-wider"
+              className="w-full h-11 text-sm font-bold tracking-wider uppercase"
             >
               Preencher com credenciais de Alice
             </Button>
 
-            <div className="pt-3 border-t border-border-dark text-center">
+            <div className="pt-4 border-t border-border-dark text-center">
               <button
                 type="button"
                 onClick={() => setMode("login")}

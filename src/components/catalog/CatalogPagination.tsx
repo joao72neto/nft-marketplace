@@ -20,7 +20,6 @@ export const CatalogPagination: React.FC<CatalogPaginationProps> = ({
       aria-label="Navegação entre páginas de NFTs"
       className="flex items-center justify-end gap-2 font-mono pt-8"
     >
-      {/* Botão Anterior (apenas se página > 1) */}
       {currentPage > 1 && (
         <button
           type="button"
@@ -32,7 +31,6 @@ export const CatalogPagination: React.FC<CatalogPaginationProps> = ({
         </button>
       )}
 
-      {/* Lista de Páginas */}
       <div className="flex items-center gap-2">
         {pages.map((p) => {
           const isCurrent = p === currentPage;
@@ -54,7 +52,6 @@ export const CatalogPagination: React.FC<CatalogPaginationProps> = ({
         })}
       </div>
 
-      {/* Botão Próximo */}
       {currentPage < totalPages && (
         <button
           type="button"
@@ -68,4 +65,3 @@ export const CatalogPagination: React.FC<CatalogPaginationProps> = ({
     </nav>
   );
 };
-

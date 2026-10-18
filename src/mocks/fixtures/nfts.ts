@@ -19,7 +19,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 1420,
     createdAt: "2026-03-01T12:00:00.000Z",
-    description: "Um primata cibernético forjado na megalópole de Kurio. Possui circuitos biofotônicos e olhar penetrante de quem já presenciou a revolução das redes neurais descentralizadas.",
+    description:
+      "Um primata cibernético forjado na megalópole de Kurio. Possui circuitos biofotônicos e olhar penetrante de quem já presenciou a revolução das redes neurais descentralizadas.",
     contractAddress: "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7",
     blockchain: "Ethereum",
     tokenStandard: "ERC-721",
@@ -51,7 +52,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 3890,
     createdAt: "2026-02-15T09:30:00.000Z",
-    description: "A matriz fundamental de onde derivam todos os blocos do ecossistema Kurio. Peça única 1/1 esculpida em voxel hipercristalino.",
+    description:
+      "A matriz fundamental de onde derivam todos os blocos do ecossistema Kurio. Peça única 1/1 esculpida em voxel hipercristalino.",
     contractAddress: "0x34C836e4922e921b7736413a2aC4D5aDb2849A1",
     blockchain: "Ethereum",
     tokenStandard: "ERC-721",
@@ -79,7 +81,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 890,
     createdAt: "2026-03-10T18:45:00.000Z",
-    description: "Sinfonia visual e acústica renderizada em ondas de frequência subgraves. Cada edição garante acesso a stems masterizados exclusivos.",
+    description:
+      "Sinfonia visual e acústica renderizada em ondas de frequência subgraves. Cada edição garante acesso a stems masterizados exclusivos.",
     contractAddress: "0x51E2836e4922e921b7736413a2aC4D5aDb2849A2",
     blockchain: "Ethereum",
     tokenStandard: "ERC-1155",
@@ -110,7 +113,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 2310,
     createdAt: "2026-01-20T22:10:00.000Z",
-    description: "Fotografia analógica de longa exposição capturada em Shibuya durante a chuva torrencial de novembro de 2025. Edição completamente esgotada.",
+    description:
+      "Fotografia analógica de longa exposição capturada em Shibuya durante a chuva torrencial de novembro de 2025. Edição completamente esgotada.",
     contractAddress: "0x77A1836e4922e921b7736413a2aC4D5aDb2849A3",
     blockchain: "Ethereum",
     tokenStandard: "ERC-721",
@@ -141,7 +145,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 3100,
     createdAt: "2026-02-28T15:20:00.000Z",
-    description: "Entidade cósmica que canaliza auroras boreais em partículas de matéria escura sintetizada.",
+    description:
+      "Entidade cósmica que canaliza auroras boreais em partículas de matéria escura sintetizada.",
     contractAddress: "0x12F3836e4922e921b7736413a2aC4D5aDb2849A4",
     blockchain: "Ethereum",
     tokenStandard: "ERC-721",
@@ -167,7 +172,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 950,
     createdAt: "2026-03-05T11:00:00.000Z",
-    description: "Fragmento condensado de supercondutividade operando em temperatura ambiente.",
+    description:
+      "Fragmento condensado de supercondutividade operando em temperatura ambiente.",
     contractAddress: "0x34C836e4922e921b7736413a2aC4D5aDb2849A1",
     blockchain: "Ethereum",
     tokenStandard: "ERC-1155",
@@ -193,7 +199,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 620,
     createdAt: "2026-03-12T20:10:00.000Z",
-    description: "Linha de baixo analógica gravada com sintetizadores modulares vintage dos anos 80.",
+    description:
+      "Linha de baixo analógica gravada com sintetizadores modulares vintage dos anos 80.",
     contractAddress: "0x51E2836e4922e921b7736413a2aC4D5aDb2849A2",
     blockchain: "Ethereum",
     tokenStandard: "ERC-1155",
@@ -220,7 +227,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 1780,
     createdAt: "2026-02-10T16:00:00.000Z",
-    description: "As dunas douradas sob a luz prateada da via láctea em uma noite límpida de inverno.",
+    description:
+      "As dunas douradas sob a luz prateada da via láctea em uma noite límpida de inverno.",
     contractAddress: "0x77A1836e4922e921b7736413a2aC4D5aDb2849A3",
     blockchain: "Ethereum",
     tokenStandard: "ERC-721",
@@ -246,7 +254,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 4200,
     createdAt: "2026-03-02T14:15:00.000Z",
-    description: "Guerreiro de honra que protege os nós mestres do livro-razão imutável.",
+    description:
+      "Guerreiro de honra que protege os nós mestres do livro-razão imutável.",
     contractAddress: "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7",
     blockchain: "Ethereum",
     tokenStandard: "ERC-721",
@@ -269,7 +278,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 7800,
     createdAt: "2026-01-05T08:00:00.000Z",
-    description: "Obra prima de refração cromática. Um dos artefatos mais valorizados do acervo GreenMint.",
+    description:
+      "Obra prima de refração cromática. Um dos artefatos mais valorizados do acervo GreenMint.",
     contractAddress: "0x34C836e4922e921b7736413a2aC4D5aDb2849A1",
     blockchain: "Ethereum",
     tokenStandard: "ERC-721",
@@ -292,7 +302,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 1120,
     createdAt: "2026-03-08T17:30:00.000Z",
-    description: "Hidroacústica gravada na Fossa das Marianas combinada com sintetizadores subaquáticos.",
+    description:
+      "Hidroacústica gravada na Fossa das Marianas combinada com sintetizadores subaquáticos.",
     contractAddress: "0x51E2836e4922e921b7736413a2aC4D5aDb2849A2",
     blockchain: "Ethereum",
     tokenStandard: "ERC-1155",
@@ -318,7 +329,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 510,
     createdAt: "2026-03-14T11:20:00.000Z",
-    description: "Espelho d'água refletindo arranha-céus iluminados em uma poça urbana.",
+    description:
+      "Espelho d'água refletindo arranha-céus iluminados em uma poça urbana.",
     contractAddress: "0x77A1836e4922e921b7736413a2aC4D5aDb2849A3",
     blockchain: "Ethereum",
     tokenStandard: "ERC-721",
@@ -344,7 +356,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 2040,
     createdAt: "2026-02-22T19:00:00.000Z",
-    description: "Armadura mecânica autônoma com motor de distorção temporal em escala quântica.",
+    description:
+      "Armadura mecânica autônoma com motor de distorção temporal em escala quântica.",
     contractAddress: "0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7",
     blockchain: "Ethereum",
     tokenStandard: "ERC-721",
@@ -370,7 +383,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 1650,
     createdAt: "2026-01-18T13:40:00.000Z",
-    description: "Chave de acesso às salas secretas da governança do metaverso Kurio. Totalmente resgatada.",
+    description:
+      "Chave de acesso às salas secretas da governança do metaverso Kurio. Totalmente resgatada.",
     contractAddress: "0x34C836e4922e921b7736413a2aC4D5aDb2849A1",
     blockchain: "Ethereum",
     tokenStandard: "ERC-721",
@@ -396,7 +410,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 770,
     createdAt: "2026-03-04T16:00:00.000Z",
-    description: "Campo vibratório senoidal harmônico que estimula o relaxamento e o foco criativo.",
+    description:
+      "Campo vibratório senoidal harmônico que estimula o relaxamento e o foco criativo.",
     contractAddress: "0x51E2836e4922e921b7736413a2aC4D5aDb2849A2",
     blockchain: "Ethereum",
     tokenStandard: "ERC-1155",
@@ -422,7 +437,8 @@ export const INITIAL_NFTS: NftDetailDTO[] = [
     version: 1,
     viewsCount: 2980,
     createdAt: "2026-02-18T23:50:00.000Z",
-    description: "Céu incendiado por luzes esmeralda nas ilhas Lofoten durante tempestade geomagnética.",
+    description:
+      "Céu incendiado por luzes esmeralda nas ilhas Lofoten durante tempestade geomagnética.",
     contractAddress: "0x77A1836e4922e921b7736413a2aC4D5aDb2849A3",
     blockchain: "Ethereum",
     tokenStandard: "ERC-721",

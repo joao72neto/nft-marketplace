@@ -29,16 +29,25 @@ const getImageForNft = (id: string, index?: number): string => {
 interface NftCardProps {
   nft: NftSummaryDTO;
   index?: number;
+  isHighlight?: boolean;
 }
 
-export const NftCard: React.FC<NftCardProps> = ({ nft, index }) => {
+export const NftCard: React.FC<NftCardProps> = ({
+  nft,
+  index,
+  isHighlight,
+}) => {
   const chosenImage = getImageForNft(nft.id, index);
   const [imgSrc, setImgSrc] = useState(chosenImage);
 
   return (
     <article
       data-testid={`nft-card-${nft.id}`}
-      className="group font-mono text-left"
+      className={`group font-mono text-left transition-all duration-500 rounded-[14px] ${
+        isHighlight
+          ? "ring-2 ring-primary bg-primary/10 p-1.5 shadow-[0_0_20px_rgba(210,138,76,0.6)] animate-pulse"
+          : ""
+      }`}
     >
       <Link
         to="/nft/$id"

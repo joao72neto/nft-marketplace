@@ -1,8 +1,5 @@
 import React, { useState, useCallback } from "react";
-import {
-  AuthModalContext,
-  type AuthModalMode,
-} from "./auth-modal-base";
+import { AuthModalContext, type AuthModalMode } from "./auth-modal-base";
 
 export const AuthModalProvider: React.FC<{ children: React.ReactNode }> = ({
   children,

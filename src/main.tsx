@@ -7,7 +7,6 @@ import { router } from "@/router";
 import { enableMocking } from "@/mocks/browser";
 import { socketClient } from "@/lib/socket-client";
 import { AuthProvider, AuthModalProvider } from "@/features/auth";
-import { DevToolbar } from "@/components/dev/DevToolbar";
 import "@/index.css";
 
 const rootElement = document.getElementById("root");
@@ -25,7 +24,6 @@ enableMocking().finally(() => {
         <AuthProvider>
           <AuthModalProvider>
             <RouterProvider router={router} />
-            <DevToolbar />
           </AuthModalProvider>
         </AuthProvider>
       </QueryClientProvider>

@@ -44,7 +44,6 @@ export const CatalogToolbar: React.FC<CatalogToolbarProps> = ({
     setLocalSearch(searchQuery);
   }
 
-  // Debounce de 350ms na digitação
   useEffect(() => {
     const handler = setTimeout(() => {
       if (localSearch !== searchQuery) {

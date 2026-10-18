@@ -1,19 +1,23 @@
 import { http, HttpResponse } from "msw";
-import type { ApiErrorResponse, NftCategory, NftQueryParams, NftSortOption, NftStatus } from "@/contracts";
+import type {
+  ApiErrorResponse,
+  NftCategory,
+  NftQueryParams,
+  NftSortOption,
+  NftStatus,
+} from "@/contracts";
 import { getNftById, listNfts } from "../db";
 import { getActiveScenario } from "../scenarios/active-scenario";
 import { processScenarioMiddleware } from "../scenarios/middleware";
 import { apiPath } from "./utils";
 
 export const nftHandlers = [
-  // GET /api/nfts
   http.get(apiPath("/nfts"), async ({ request }) => {
     const middlewareResult = await processScenarioMiddleware(request);
     if (middlewareResult) return middlewareResult;
 
     const { scenario } = getActiveScenario();
 
-    // Se cenário de catálogo vazio estiver ativo
     if (scenario === "empty-catalog") {
       return HttpResponse.json({
         items: [],
@@ -38,15 +42,18 @@ export const nftHandlers = [
       priceMin: searchParams.get("priceMin") || undefined,
       priceMax: searchParams.get("priceMax") || undefined,
       sort: (searchParams.get("sort") as NftSortOption) || undefined,
-      page: searchParams.get("page") ? parseInt(searchParams.get("page")!, 10) : 1,
-      limit: searchParams.get("limit") ? parseInt(searchParams.get("limit")!, 10) : 8,
+      page: searchParams.get("page")
+        ? parseInt(searchParams.get("page")!, 10)
+        : 1,
+      limit: searchParams.get("limit")
+        ? parseInt(searchParams.get("limit")!, 10)
+        : 8,
     };
 
     const paginated = listNfts(queryParams);
     return HttpResponse.json(paginated, { status: 200 });
   }),
 
-  // GET /api/nfts/:id
   http.get(apiPath("/nfts/:id"), async ({ request, params }) => {
     const middlewareResult = await processScenarioMiddleware(request);
     if (middlewareResult) return middlewareResult;

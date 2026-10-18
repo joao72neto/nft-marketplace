@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
-import type { UserDTO, AuthResponse, LoginRequest, RegisterRequest } from "@/contracts";
+import type {
+  UserDTO,
+  AuthResponse,
+  LoginRequest,
+  RegisterRequest,
+} from "@/contracts";
 import { apiClient } from "@/lib/api-client";
 import { queryClient } from "@/lib/query-client";
 import { authStorage, isTokenExpired } from "./auth-storage";
@@ -24,7 +29,9 @@ function getInitialAuthState(): AuthState {
   };
 }
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [state, setState] = useState<AuthState>(getInitialAuthState);
 
   const logout = useCallback(async () => {
@@ -76,28 +83,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  const login = useCallback(
-    async (email: string, password: string) => {
-      const payload: LoginRequest = { email, password };
-      const response = await apiClient.post<AuthResponse>("/auth/login", payload);
-      const { user, token } = response.data;
+  const login = useCallback(async (email: string, password: string) => {
+    const payload: LoginRequest = { email, password };
+    const response = await apiClient.post<AuthResponse>("/auth/login", payload);
+    const { user, token } = response.data;
 
-      authStorage.setToken(token);
-      queryClient.clear();
-      setState({
-        user,
-        token,
-        isAuthenticated: true,
-        isLoading: false,
-      });
-    },
-    [],
-  );
+    authStorage.setToken(token);
+    queryClient.clear();
+    setState({
+      user,
+      token,
+      isAuthenticated: true,
+      isLoading: false,
+    });
+  }, []);
 
   const register = useCallback(
     async (name: string, email: string, password: string) => {
       const payload: RegisterRequest = { name, email, password };
-      const response = await apiClient.post<AuthResponse>("/auth/register", payload);
+      const response = await apiClient.post<AuthResponse>(
+        "/auth/register",
+        payload,
+      );
       const { user, token } = response.data;
 
       authStorage.setToken(token);
@@ -141,7 +148,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     window.addEventListener("greenmint:auth:unauthorized", handleUnauthorized);
     return () => {
-      window.removeEventListener("greenmint:auth:unauthorized", handleUnauthorized);
+      window.removeEventListener(
+        "greenmint:auth:unauthorized",
+        handleUnauthorized,
+      );
     };
   }, [state.token, state.isLoading, logout]);
 
