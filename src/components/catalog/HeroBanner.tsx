@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import heroImg from "@/assets/hero.png";
 
 export const HeroBanner: React.FC = () => {
   const handleScrollToCatalog = () => {
@@ -17,7 +16,6 @@ export const HeroBanner: React.FC = () => {
     >
       <div className="container max-w-300 mx-auto px-4 lg:px-0">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Coluna Texto / Chamada */}
           <div className="lg:col-span-7 space-y-6 text-left">
             <span className="block mb-5">Bem-vindo à Kurio</span>
 
@@ -42,11 +40,10 @@ export const HeroBanner: React.FC = () => {
             </div>
           </div>
 
-          {/* Coluna Card em Destaque */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
             <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-ink border border-border-dark mb-4">
               <img
-                src={heroImg}
+                src="/assets/blog/blog-2.png"
                 alt="Cyber Ape #1042 - Coleção Destaque"
                 className="w-full h-full object-cover"
                 loading="eager"

@@ -9,7 +9,6 @@ export const PromoCardsSection: React.FC = () => {
     >
       <div className="container max-w-300 mx-auto px-4 lg:px-0">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Card 1: Lançamentos gênesis */}
           <div className="rounded-2xl border border-border-dark bg-surface-card p-6 flex flex-col sm:flex-row items-center gap-6 shadow-sm">
             <div className="w-full sm:w-[200px] h-[200px] shrink-0 rounded-xl overflow-hidden bg-ink">
               <img
@@ -22,10 +21,12 @@ export const PromoCardsSection: React.FC = () => {
             <div className="flex-1 flex flex-col justify-between h-full space-y-3">
               <div>
                 <h3 className="text-lg sm:text-xl font-bold text-foreground leading-snug">
-                  Lançamentos gênesis <br className="hidden sm:inline" /> de edição limitada
+                  Lançamentos gênesis <br className="hidden sm:inline" /> de
+                  edição limitada
                 </h3>
                 <p className="text-xs text-secondary-text leading-relaxed mt-2">
-                  Colecione edições escassas diretamente dos criadores antes da revelação pública.
+                  Colecione edições escassas diretamente dos criadores antes da
+                  revelação pública.
                 </p>
               </div>
               <div>
@@ -40,7 +41,6 @@ export const PromoCardsSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Card 2: Arte digital selecionada */}
           <div className="rounded-2xl border border-border-dark bg-surface-card p-6 flex flex-col sm:flex-row items-center gap-6 shadow-sm">
             <div className="w-full sm:w-[200px] h-[200px] shrink-0 rounded-xl overflow-hidden bg-ink">
               <img
@@ -53,10 +53,12 @@ export const PromoCardsSection: React.FC = () => {
             <div className="flex-1 flex flex-col justify-between h-full space-y-3">
               <div>
                 <h3 className="text-lg sm:text-xl font-bold text-foreground leading-snug">
-                  Arte digital selecionada <br className="hidden sm:inline" /> e muito mais
+                  Arte digital selecionada <br className="hidden sm:inline" /> e
+                  muito mais
                 </h3>
                 <p className="text-xs text-secondary-text leading-relaxed mt-2">
-                  Explore novos artistas, coleções verificadas e obras digitais que definem a cultura.
+                  Explore novos artistas, coleções verificadas e obras digitais
+                  que definem a cultura.
                 </p>
               </div>
               <div>
@@ -75,4 +77,3 @@ export const PromoCardsSection: React.FC = () => {
     </section>
   );
 };
-

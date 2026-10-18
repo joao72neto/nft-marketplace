@@ -66,7 +66,6 @@ export const HomePage: React.FC = () => {
   const { data, isLoading, isError, error, refetch, isPlaceholderData } =
     useCatalogQuery(queryParams);
 
-  // Atualizador de search params com reset de página quando filtros mudam
   const updateSearch = (
     newParams: Partial<CatalogSearchParams>,
     resetPage = true,
@@ -79,7 +78,6 @@ export const HomePage: React.FC = () => {
     if (resetPage) {
       delete next.page;
     }
-    // Remove chaves indefinidas/vazias para manter a URL limpa
     (Object.keys(next) as (keyof CatalogSearchParams)[]).forEach((key) => {
       if (
         next[key] === undefined ||
@@ -135,7 +133,6 @@ export const HomePage: React.FC = () => {
     setIsMobileFiltersOpen(false);
   };
 
-  // Contagem de filtros ativos para o badge no mobile
   const activeFiltersCount = [
     searchParams.category,
     searchParams.status,
@@ -164,8 +161,7 @@ export const HomePage: React.FC = () => {
               onClearFilters={handleClearFilters}
             />
 
-            {/* Banner NFT em Destaque */}
-            <div className="w-full lg:w-[310px] space-y-3 font-mono text-left">
+            <div className="w-full lg:w-77.5 space-y-3 font-mono text-left">
               <div className="space-y-0.5">
                 <span className="text-[14px] font-bold tracking-wider text-accent block">
                   NFT EM DESTAQUE
@@ -236,8 +232,8 @@ export const HomePage: React.FC = () => {
                   data-testid="nfts-grid"
                   className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10"
                 >
-                  {data.items.map((nft) => (
-                    <NftCard key={nft.id} nft={nft} />
+                  {data.items.map((nft, idx) => (
+                    <NftCard key={nft.id} nft={nft} index={idx} />
                   ))}
                 </div>
 
@@ -249,7 +245,6 @@ export const HomePage: React.FC = () => {
               </>
             )}
           </div>
-
         </div>
 
         <CatalogMobileFiltersSheet
