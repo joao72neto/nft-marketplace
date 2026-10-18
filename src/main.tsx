@@ -6,6 +6,7 @@ import { queryClient } from "@/lib/query-client";
 import { router } from "@/router";
 import { enableMocking } from "@/mocks/browser";
 import { socketClient } from "@/lib/socket-client";
+import { AuthProvider } from "@/features/auth/auth-context";
 import { DevToolbar } from "@/components/dev/DevToolbar";
 import "@/index.css";
 
@@ -21,8 +22,10 @@ enableMocking().finally(() => {
   createRoot(rootElement).render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        <DevToolbar />
+        <AuthProvider>
+          <RouterProvider router={router} />
+          <DevToolbar />
+        </AuthProvider>
       </QueryClientProvider>
     </StrictMode>,
   );

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { MenuIcon, LogoutIcon, CartIcon } from "@/components/icons";
+import { useAuth } from "@/features/auth";
 
 interface MobileNavProps {
   cartCount?: number;
@@ -18,6 +19,7 @@ export function MobileNav({ cartCount = 0 }: MobileNavProps) {
   const [open, setOpen] = React.useState(false);
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
+  const { user, isAuthenticated, logout } = useAuth();
 
   const navLinks = [
     { label: "Início", href: "/" },
@@ -57,6 +59,11 @@ export function MobileNav({ cartCount = 0 }: MobileNavProps) {
             <SheetTitle className="font-mono text-xl font-bold tracking-widest text-foreground">
               KURIO
             </SheetTitle>
+            {isAuthenticated && user && (
+              <p className="text-xs font-mono text-accent truncate mt-1">
+                Olá, {user.name}
+              </p>
+            )}
           </SheetHeader>
 
           <nav
@@ -113,17 +120,32 @@ export function MobileNav({ cartCount = 0 }: MobileNavProps) {
         </div>
 
         <div className="pt-6 border-t border-border-dark">
-          <Button
-            asChild
-            variant="primary"
-            size="lg"
-            className="w-full justify-center"
-          >
-            <Link to="/login" onClick={() => setOpen(false)}>
+          {isAuthenticated ? (
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full justify-center text-coral border-coral/40 hover:bg-coral/10 hover:text-coral"
+              onClick={() => {
+                setOpen(false);
+                logout();
+              }}
+            >
               <LogoutIcon size={18} />
-              <span>Entrar</span>
-            </Link>
-          </Button>
+              <span>Sair da conta</span>
+            </Button>
+          ) : (
+            <Button
+              asChild
+              variant="primary"
+              size="lg"
+              className="w-full justify-center"
+            >
+              <Link to="/login" onClick={() => setOpen(false)}>
+                <LogoutIcon size={18} />
+                <span>Entrar</span>
+              </Link>
+            </Button>
+          )}
         </div>
       </SheetContent>
     </Sheet>

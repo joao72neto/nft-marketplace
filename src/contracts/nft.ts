@@ -1,10 +1,11 @@
 import type { EthAmount } from "./common";
 
-export type NftCategory = "art" | "collectibles" | "music" | "photography";
+export type NftCategory = "novos-lancamentos" | "em-alta";
 
 export type NftStatus = "all" | "on_sale" | "last_editions" | "sold_out";
 
-export type NftSortOption = "price_asc" | "price_desc" | "recently_listed" | "most_viewed";
+export type NftSortOption =
+  "price_asc" | "price_desc" | "recently_listed" | "most_viewed";
 
 export interface NftAttributeDTO {
   traitType: string;

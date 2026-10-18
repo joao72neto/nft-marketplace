@@ -46,9 +46,14 @@ export function formatBigIntToEth(wei: bigint): EthAmount {
   const isNegative = wei < 0n;
   const absWei = isNegative ? -wei : wei;
   const integerPart = absWei / 1000000000000000000n;
-  const fractionalPart = (absWei % 1000000000000000000n).toString().padStart(18, "0");
+  const fractionalPart = (absWei % 1000000000000000000n)
+    .toString()
+    .padStart(18, "0");
   const trimmedFraction = fractionalPart.replace(/0+$/, "").slice(0, 4);
-  const result = trimmedFraction.length > 0 ? `${integerPart}.${trimmedFraction}` : integerPart.toString();
+  const result =
+    trimmedFraction.length > 0
+      ? `${integerPart}.${trimmedFraction}`
+      : integerPart.toString();
   return isNegative ? `-${result}` : result;
 }
 
@@ -137,7 +142,9 @@ export function saveGuestState(state: GuestState): void {
 // Catálogo de NFTs (Busca, Filtros, Ordenação)
 // ==========================================
 
-export function listNfts(params: NftQueryParams = {}): PaginatedResponse<NftSummaryDTO> {
+export function listNfts(
+  params: NftQueryParams = {},
+): PaginatedResponse<NftSummaryDTO> {
   let list = [...getCatalog()];
 
   if (params.search && params.search.trim().length > 0) {
@@ -146,7 +153,7 @@ export function listNfts(params: NftQueryParams = {}): PaginatedResponse<NftSumm
       (nft) =>
         nft.title.toLowerCase().includes(term) ||
         nft.collection.toLowerCase().includes(term) ||
-        nft.creatorName.toLowerCase().includes(term)
+        nft.creatorName.toLowerCase().includes(term),
     );
   }
 
@@ -158,9 +165,16 @@ export function listNfts(params: NftQueryParams = {}): PaginatedResponse<NftSumm
     if (params.status === "on_sale") {
       list = list.filter((nft) => nft.isAvailable && nft.availableEditions > 2);
     } else if (params.status === "last_editions") {
-      list = list.filter((nft) => nft.isAvailable && nft.availableEditions > 0 && nft.availableEditions <= 2);
+      list = list.filter(
+        (nft) =>
+          nft.isAvailable &&
+          nft.availableEditions > 0 &&
+          nft.availableEditions <= 2,
+      );
     } else if (params.status === "sold_out") {
-      list = list.filter((nft) => !nft.isAvailable || nft.availableEditions === 0);
+      list = list.filter(
+        (nft) => !nft.isAvailable || nft.availableEditions === 0,
+      );
     }
   }
 
@@ -177,13 +191,20 @@ export function listNfts(params: NftQueryParams = {}): PaginatedResponse<NftSumm
   if (params.sort) {
     switch (params.sort) {
       case "price_asc":
-        list.sort((a, b) => (parseEthToBigInt(a.priceEth) < parseEthToBigInt(b.priceEth) ? -1 : 1));
+        list.sort((a, b) =>
+          parseEthToBigInt(a.priceEth) < parseEthToBigInt(b.priceEth) ? -1 : 1,
+        );
         break;
       case "price_desc":
-        list.sort((a, b) => (parseEthToBigInt(a.priceEth) > parseEthToBigInt(b.priceEth) ? -1 : 1));
+        list.sort((a, b) =>
+          parseEthToBigInt(a.priceEth) > parseEthToBigInt(b.priceEth) ? -1 : 1,
+        );
         break;
       case "recently_listed":
-        list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        list.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+        );
         break;
       case "most_viewed":
         list.sort((a, b) => b.viewsCount - a.viewsCount);
@@ -217,7 +238,7 @@ export function getNftById(id: string): NftDetailDTO | undefined {
 
 export function updateNftCatalogItem(
   id: string,
-  updater: (nft: NftDetailDTO) => NftDetailDTO
+  updater: (nft: NftDetailDTO) => NftDetailDTO,
 ): NftDetailDTO | undefined {
   const catalog = getCatalog();
   const index = catalog.findIndex((n) => n.id === id);
@@ -282,19 +303,24 @@ export function addItemToCart(
   userId: string | null,
   nftId: string,
   edition: number,
-  quantity: number
+  quantity: number,
 ): { success: boolean; cart: CartDTO; error?: string } {
   const nft = getNftById(nftId);
   if (!nft || !nft.isAvailable || nft.availableEditions <= 0) {
-    return { success: false, cart: getCart(userId), error: "NFT indisponível ou esgotado." };
+    return {
+      success: false,
+      cart: getCart(userId),
+      error: "NFT indisponível ou esgotado.",
+    };
   }
 
   const cart = getCart(userId);
   const existingIndex = cart.items.findIndex(
-    (item) => item.nftId === nftId && item.edition === edition
+    (item) => item.nftId === nftId && item.edition === edition,
   );
 
-  const currentQty = existingIndex >= 0 ? cart.items[existingIndex].quantity : 0;
+  const currentQty =
+    existingIndex >= 0 ? cart.items[existingIndex].quantity : 0;
   const newQty = currentQty + quantity;
 
   if (newQty > nft.availableEditions) {
@@ -329,7 +355,7 @@ export function addItemToCart(
 export function updateCartItemQuantity(
   userId: string | null,
   itemId: string,
-  quantity: number
+  quantity: number,
 ): { success: boolean; cart: CartDTO; error?: string } {
   const cart = getCart(userId);
   const item = cart.items.find((i) => i.id === itemId);
@@ -370,7 +396,11 @@ export function removeCartItem(userId: string | null, itemId: string): CartDTO {
 }
 
 export function clearCart(userId: string | null): CartDTO {
-  const cart: CartDTO = { items: [], couponCode: null, updatedAt: new Date().toISOString() };
+  const cart: CartDTO = {
+    items: [],
+    couponCode: null,
+    updatedAt: new Date().toISOString(),
+  };
   saveCart(userId, cart);
   return cart;
 }
@@ -389,12 +419,16 @@ export function mergeGuestCartIntoUser(userId: string): CartDTO {
     if (!nft || !nft.isAvailable || nft.availableEditions <= 0) continue;
 
     const existingIndex = userCart.items.findIndex(
-      (ui) => ui.nftId === guestItem.nftId && ui.edition === guestItem.edition
+      (ui) => ui.nftId === guestItem.nftId && ui.edition === guestItem.edition,
     );
 
     if (existingIndex >= 0) {
-      const combinedQty = userCart.items[existingIndex].quantity + guestItem.quantity;
-      userCart.items[existingIndex].quantity = Math.min(combinedQty, nft.availableEditions);
+      const combinedQty =
+        userCart.items[existingIndex].quantity + guestItem.quantity;
+      userCart.items[existingIndex].quantity = Math.min(
+        combinedQty,
+        nft.availableEditions,
+      );
     } else {
       userCart.items.push({
         ...guestItem,
@@ -416,7 +450,7 @@ export function mergeGuestCartIntoUser(userId: string): CartDTO {
 
 export function calculateQuote(
   items: Array<{ nftId: string; quantity: number }>,
-  couponCode?: string | null
+  couponCode?: string | null,
 ): { success: boolean; quote?: QuoteResponse; error?: string } {
   let subtotalWei = 0n;
 
@@ -446,7 +480,8 @@ export function calculateQuote(
       return { success: false, error: "Cupom expirado." };
     }
 
-    const discountWei = (subtotalWei * BigInt(coupon.discountPercentage)) / 100n;
+    const discountWei =
+      (subtotalWei * BigInt(coupon.discountPercentage)) / 100n;
     discountEth = formatBigIntToEth(discountWei);
     appliedCoupon = coupon;
   }
@@ -481,10 +516,12 @@ export function calculateQuote(
 export function createOrderWithIdempotency(
   userId: string,
   idempotencyKey: string,
-  payload: CreateOrderRequest
+  payload: CreateOrderRequest,
 ): { isNew: boolean; order: OrderReceiptDTO; conflict?: boolean } {
   const userState = getUserState(userId);
-  const existingOrder = userState.orders.find((o) => o.idempotencyKey === idempotencyKey);
+  const existingOrder = userState.orders.find(
+    (o) => o.idempotencyKey === idempotencyKey,
+  );
 
   if (existingOrder) {
     // Mesma chave: comparar conteúdo
@@ -540,13 +577,18 @@ export function createOrderWithIdempotency(
 
   // Limpar do carrinho os itens comprados (RN-09)
   const purchasedNftIds = payload.items.map((i) => i.nftId);
-  userState.cart.items = userState.cart.items.filter((i) => !purchasedNftIds.includes(i.nftId));
+  userState.cart.items = userState.cart.items.filter(
+    (i) => !purchasedNftIds.includes(i.nftId),
+  );
 
   saveUserState(userId, userState);
   return { isNew: true, order: newOrder };
 }
 
-export function getUserOrderById(userId: string, orderId: string): OrderReceiptDTO | undefined {
+export function getUserOrderById(
+  userId: string,
+  orderId: string,
+): OrderReceiptDTO | undefined {
   return getUserState(userId).orders.find((o) => o.id === orderId);
 }
 
@@ -556,7 +598,7 @@ export function getUserOrderById(userId: string, orderId: string): OrderReceiptD
 
 export function updateUserProfile(
   userId: string,
-  data: Partial<UserProfileDTO>
+  data: Partial<UserProfileDTO>,
 ): UserProfileDTO {
   const userState = getUserState(userId);
   userState.profile = {
@@ -583,7 +625,10 @@ export function updateUserProfile(
   return userState.profile;
 }
 
-export function updateUserWallets(userId: string, wallets: WalletDTO[]): WalletDTO[] {
+export function updateUserWallets(
+  userId: string,
+  wallets: WalletDTO[],
+): WalletDTO[] {
   const userState = getUserState(userId);
   userState.wallets = wallets;
   saveUserState(userId, userState);
@@ -598,5 +643,7 @@ export function resetDatabase(): void {
   clearMockStorage();
   saveCatalog(INITIAL_NFTS);
   saveUsers(INITIAL_USERS);
-  console.info("[Mock DB] Banco de dados simulado restaurado para o estado inicial das fixtures.");
+  console.info(
+    "[Mock DB] Banco de dados simulado restaurado para o estado inicial das fixtures.",
+  );
 }

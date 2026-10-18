@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { SearchIcon, CartIcon, LogoutIcon } from "@/components/icons";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { useAuth } from "@/features/auth";
+import { UserMenu } from "@/components/layout/UserMenu";
 
 interface HeaderProps {
   cartCount?: number;
@@ -12,6 +14,7 @@ interface HeaderProps {
 export function Header({ cartCount = 0 }: HeaderProps) {
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
+  const { isAuthenticated, isLoading } = useAuth();
 
   const isHome = currentPath === "/";
   const isMarket = currentPath.startsWith("/mercado");
@@ -19,7 +22,7 @@ export function Header({ cartCount = 0 }: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 w-full bg-ink/95 backdrop-blur-md">
       <div className="container max-w-300 mx-auto px-4 lg:px-0">
-        <div className="flex h-20 items-center justify-between gap-4">
+        <div className="flex h-20 items-center justify-between gap-4 border-b border-primary/20">
           {/* Logo & Desktop Nav */}
           <div className="flex items-center gap-10">
             <Link
@@ -29,14 +32,13 @@ export function Header({ cartCount = 0 }: HeaderProps) {
             >
               KURIO
             </Link>
-
             <nav
               className="hidden lg:flex items-center gap-8"
               aria-label="Navegação principal"
             >
               <Link
                 to="/"
-                className={`relative py-2 text-sm font-mono transition-colors min-h-11 flex items-center ${
+                className={`relative py-2 text-sm font -mono transition-colors min-h-11 flex items-center ${
                   isHome
                     ? "text-foreground font-bold"
                     : "text-foreground/80 hover:text-foreground"
@@ -101,12 +103,25 @@ export function Header({ cartCount = 0 }: HeaderProps) {
               )}
             </Link>
 
-            <Button asChild variant="primary" size="md" className="gap-2 px-5">
-              <Link to="/login">
-                <LogoutIcon size={18} />
-                <span>Entrar</span>
-              </Link>
-            </Button>
+            {!isLoading && (
+              <>
+                {isAuthenticated ? (
+                  <UserMenu />
+                ) : (
+                  <Button
+                    asChild
+                    variant="primary"
+                    size="md"
+                    className="gap-2 px-5"
+                  >
+                    <Link to="/login">
+                      <LogoutIcon size={18} />
+                      <span>Entrar</span>
+                    </Link>
+                  </Button>
+                )}
+              </>
+            )}
           </div>
 
           {/* Mobile Right Actions */}

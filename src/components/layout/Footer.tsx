@@ -1,24 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import {
   FacebookIcon,
   InstagramIcon,
   TwitterIcon,
   LinkedinIcon,
-  UnionIcon,
-  MetaMaskIcon,
-  CoinbaseIcon,
-  WalletConnectIcon,
 } from "@/components/icons";
 
 export function Footer() {
-  const [email, setEmail] = React.useState("");
-  const [subscribed, setSubscribed] = React.useState(false);
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubscribe = (e: React.ChangeEvent) => {
+  const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (email.trim()) {
       setSubscribed(true);
@@ -27,291 +20,288 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full bg-surface-card border-t border-border-dark mt-auto text-foreground font-mono">
-      {/* Bloco 1: Benefícios e Newsletter */}
+    <footer className="w-full bg-surface-card border-t border-border-dark mt-auto text-foreground font-mono text-left">
       <div className="container max-w-300 mx-auto px-4 lg:px-0 py-12 md:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-          {/* Benefícios de Confiança */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="space-y-2">
-              <h4 className="text-sm font-bold text-foreground">
-                Segurança Total
-              </h4>
-              <p className="text-xs text-secondary-text leading-relaxed">
-                Custódia descentralizada e smart contracts auditados para
-                transações seguras.
-              </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-start">
+          <div className="space-y-3">
+            <div className="w-10 h-10 rounded-full bg-primary text-ink font-bold flex items-center justify-center text-sm">
+              W
             </div>
-            <div className="space-y-2">
-              <h4 className="text-sm font-bold text-foreground">
-                Criadores Reais
-              </h4>
-              <p className="text-xs text-secondary-text leading-relaxed">
-                Curadoria de artistas globais com verificação de autenticidade
-                on-chain.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h4 className="text-sm font-bold text-foreground">
-                Alertas Exclusivos
-              </h4>
-              <p className="text-xs text-secondary-text leading-relaxed">
-                Notificações instantâneas de novos drops, leilões e
-                movimentações do mercado.
-              </p>
-            </div>
+            <h4 className="text-[15px] font-bold text-foreground">
+              Segurança da carteira
+            </h4>
+            <p className="text-xs text-secondary-text leading-relaxed">
+              Proteja sua carteira e colecione arte digital verificada com
+              confiança.
+            </p>
           </div>
 
-          {/* Formulário de Newsletter */}
-          <div className="lg:col-span-5 space-y-3">
-            <h4 className="text-base font-bold text-foreground">
-              Receba os lançamentos semanais
+          <div className="space-y-3">
+            <div className="w-10 h-10 rounded-full bg-primary text-ink font-bold flex items-center justify-center text-sm">
+              C
+            </div>
+            <h4 className="text-[15px] font-bold text-foreground">
+              Criadores em destaque
             </h4>
-            <p className="text-xs text-secondary-text">
-              Inscreva-se para receber atualizações de coleções raras antes do
-              mercado geral.
+            <p className="text-xs text-secondary-text leading-relaxed">
+              Conheça artistas, estúdios e comunidades que moldam a cultura
+              digital na rede.
             </p>
+          </div>
+
+          <div className="space-y-3">
+            <div className="w-10 h-10 rounded-full bg-primary text-ink font-bold flex items-center justify-center text-sm">
+              D
+            </div>
+            <h4 className="text-[15px] font-bold text-foreground">
+              Alertas de lançamentos
+            </h4>
+            <p className="text-xs text-secondary-text leading-relaxed">
+              Receba calendários de cunhagem, novidades de listas de acesso e
+              análises do mercado.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <h4 className="text-[15px] font-bold text-foreground">
+              Antecipe-se ao próximo lançamento
+            </h4>
             {subscribed ? (
-              <div className="p-3 rounded-md bg-primary/10 border border-primary text-xs text-accent font-bold">
-                ✓ Inscrição confirmada com sucesso!
+              <div className="p-2.5 rounded-md bg-primary/20 text-accent font-bold text-xs">
+                ✓ E-mail cadastrado com sucesso!
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex gap-2">
-                <div className="relative flex-1">
-                  <Input
-                    type="email"
-                    placeholder="Seu melhor e-mail"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    aria-label="Endereço de e-mail para newsletter"
-                    className="bg-surface-dark border-border-dark focus-visible:border-primary text-xs h-11"
-                  />
-                </div>
-                <Button
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="digite seu e-mail..."
+                  required
+                  aria-label="Digite seu e-mail"
+                  className="flex-1 min-w-0 h-10 px-3 rounded-md bg-surface-dark border border-border-dark text-xs text-foreground placeholder:text-secondary-color focus:outline-none focus:border-primary"
+                />
+                <button
                   type="submit"
-                  variant="primary"
-                  size="md"
-                  className="h-11 px-5 text-xs font-bold"
+                  className="h-10 px-4 rounded-md bg-primary hover:bg-accent text-ink font-bold text-xs transition-colors shrink-0"
                 >
                   Enviar
-                </Button>
+                </button>
               </form>
             )}
+            <p className="text-xs text-secondary-text leading-relaxed">
+              Receba lançamentos selecionados, histórias de criadores e
+              novidades do mercado.
+            </p>
           </div>
         </div>
       </div>
 
-      <Separator />
-
-      {/* Bloco 2: Faixa Institucional de Contato */}
-      <div className="bg-surface-dark py-8">
+      <div className="bg-surface-dark py-6 border-y border-border-dark">
         <div className="container max-w-300 mx-auto px-4 lg:px-0">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-1 text-center md:text-left">
-              <span className="text-lg font-bold tracking-widest text-foreground">
-                KURIO
-              </span>
-              <p className="text-xs text-secondary-text">
-                O marketplace definitivo para colecionáveis digitais e obras
-                raras.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-secondary-text">
-              <span>contato@kurio.art</span>
-              <span className="hidden sm:inline">•</span>
-              <span>+55 11 4002-8922</span>
-              <span className="hidden sm:inline">•</span>
-              <span>Suporte 24/7 On-chain</span>
-            </div>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+            <span className="font-bold tracking-widest text-foreground text-sm">
+              KURIO
+            </span>
+            <span className="text-secondary-text">
+              Feito para colecionadores, criadores e cultura
+            </span>
+            <span className="text-secondary-text">contato@email.com</span>
+            <span className="text-secondary-text">+55 11 4002 8922</span>
           </div>
         </div>
       </div>
 
-      <Separator />
-
-      {/* Bloco 3: Colunas de Links, Redes Sociais e Carteiras */}
       <div className="container max-w-300 mx-auto px-4 lg:px-0 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-          {/* Coluna 1 */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
           <div className="space-y-3">
-            <h5 className="text-xs font-bold uppercase tracking-wider text-primary">
-              Meu Perfil
+            <h5 className="text-[15px] font-bold text-foreground">
+              Meu perfil
             </h5>
             <ul className="space-y-2 text-xs">
               <li>
                 <Link
                   to="/perfil"
-                  className="text-secondary-text hover:text-foreground transition-colors py-1 block"
+                  className="text-secondary-text hover:text-foreground transition-colors"
                 >
-                  Meus Colecionáveis
+                  Meu perfil
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/carteiras"
-                  className="text-secondary-text hover:text-foreground transition-colors py-1 block"
+                  to="/perfil"
+                  className="text-secondary-text hover:text-foreground transition-colors"
                 >
-                  Minhas Carteiras
+                  Minha coleção
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/carrinho"
-                  className="text-secondary-text hover:text-foreground transition-colors py-1 block"
+                  to="/perfil"
+                  className="text-secondary-text hover:text-foreground transition-colors"
                 >
-                  Carrinho de Compras
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Coluna 2 */}
-          <div className="space-y-3">
-            <h5 className="text-xs font-bold uppercase tracking-wider text-primary">
-              Explorar
-            </h5>
-            <ul className="space-y-2 text-xs">
-              <li>
-                <Link
-                  to="/"
-                  className="text-secondary-text hover:text-foreground transition-colors py-1 block"
-                >
-                  Todos os NFTs
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/mercado"
-                  className="text-secondary-text hover:text-foreground transition-colors py-1 block"
-                >
-                  Mercado Secundário
+                  Atividade
                 </Link>
               </li>
               <li>
                 <Link
                   to="/criadores"
-                  className="text-secondary-text hover:text-foreground transition-colors py-1 block"
+                  className="text-secondary-text hover:text-foreground transition-colors"
                 >
-                  Criadores Verificados
+                  Estúdio do criador
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/favoritos"
+                  className="text-secondary-text hover:text-foreground transition-colors"
+                >
+                  Lista de interesse
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Coluna 3 */}
           <div className="space-y-3">
-            <h5 className="text-xs font-bold uppercase tracking-wider text-primary">
-              Institucional
+            <h5 className="text-[15px] font-bold text-foreground">
+              Central de ajuda
             </h5>
             <ul className="space-y-2 text-xs">
               <li>
                 <Link
                   to="/aprenda"
-                  className="text-secondary-text hover:text-foreground transition-colors py-1 block"
+                  className="text-secondary-text hover:text-foreground transition-colors"
                 >
-                  Guia do Colecionador
+                  Central de ajuda
                 </Link>
               </li>
               <li>
-                <a
-                  href="#termos"
-                  className="text-secondary-text hover:text-foreground transition-colors py-1 block"
+                <Link
+                  to="/aprenda"
+                  className="text-secondary-text hover:text-foreground transition-colors"
                 >
-                  Termos de Uso
-                </a>
+                  Como comprar NFTs
+                </Link>
               </li>
               <li>
-                <a
-                  href="#privacidade"
-                  className="text-secondary-text hover:text-foreground transition-colors py-1 block"
+                <Link
+                  to="/carteiras"
+                  className="text-secondary-text hover:text-foreground transition-colors"
                 >
-                  Política de Privacidade
-                </a>
+                  Carteira e segurança
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/aprenda"
+                  className="text-secondary-text hover:text-foreground transition-colors"
+                >
+                  Política do mercado
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/aprenda"
+                  className="text-secondary-text hover:text-foreground transition-colors"
+                >
+                  Denunciar item
+                </Link>
               </li>
             </ul>
           </div>
 
-          {/* Coluna 4: Redes Sociais */}
           <div className="space-y-3">
-            <h5 className="text-xs font-bold uppercase tracking-wider text-primary">
-              Comunidade
-            </h5>
-            <p className="text-xs text-secondary-text">
-              Participe das discussões e acompanhe novidades.
-            </p>
-            <div className="flex flex-wrap gap-2 pt-1">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center h-10 w-10 min-h-11 min-w-11 rounded border border-border-dark bg-surface-dark text-foreground hover:text-primary hover:border-primary transition-colors"
-                aria-label="Facebook da Kurio"
-              >
-                <FacebookIcon size={16} />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center h-10 w-10 min-h-11 min-w-11 rounded border border-border-dark bg-surface-dark text-foreground hover:text-primary hover:border-primary transition-colors"
-                aria-label="Instagram da Kurio"
-              >
-                <InstagramIcon size={16} />
-              </a>
-              <a
-                href="https://x.com"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center h-10 w-10 min-h-11 min-w-11 rounded border border-border-dark bg-surface-dark text-foreground hover:text-primary hover:border-primary transition-colors"
-                aria-label="X (Twitter) da Kurio"
-              >
-                <TwitterIcon size={16} />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center justify-center h-10 w-10 min-h-11 min-w-11 rounded border border-border-dark bg-surface-dark text-foreground hover:text-primary hover:border-primary transition-colors"
-                aria-label="LinkedIn da Kurio"
-              >
-                <LinkedinIcon size={16} />
-              </a>
-              <a
-                href="#union"
-                className="flex items-center justify-center h-10 w-10 min-h-11 min-w-11 rounded border border-border-dark bg-surface-dark text-foreground hover:text-primary hover:border-primary transition-colors"
-                aria-label="Comunidade Kurio Union"
-              >
-                <UnionIcon size={16} />
-              </a>
+            <h5 className="text-[15px] font-bold text-foreground">Coleções</h5>
+            <ul className="space-y-2 text-xs">
+              <li>
+                <Link
+                  to="/"
+                  search={{ category: "novos-lancamentos" }}
+                  className="text-secondary-text hover:text-foreground transition-colors"
+                >
+                  Arte digital
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/"
+                  search={{ category: "em-alta" }}
+                  className="text-secondary-text hover:text-foreground transition-colors"
+                >
+                  Fotografia
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="space-y-6">
+            <div className="space-y-3">
+              <h5 className="text-[15px] font-bold text-foreground">
+                Redes sociais
+              </h5>
+              <div className="flex items-center gap-2">
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-8 h-8 rounded border border-border-dark flex items-center justify-center text-secondary-text hover:text-primary hover:border-primary transition-colors"
+                  aria-label="Facebook"
+                >
+                  <FacebookIcon size={14} />
+                </a>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-8 h-8 rounded border border-border-dark flex items-center justify-center text-secondary-text hover:text-primary hover:border-primary transition-colors"
+                  aria-label="Instagram"
+                >
+                  <InstagramIcon size={14} />
+                </a>
+                <a
+                  href="https://x.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-8 h-8 rounded border border-border-dark flex items-center justify-center text-secondary-text hover:text-primary hover:border-primary transition-colors"
+                  aria-label="X (Twitter)"
+                >
+                  <TwitterIcon size={14} />
+                </a>
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-8 h-8 rounded border border-border-dark flex items-center justify-center text-secondary-text hover:text-primary hover:border-primary transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <LinkedinIcon size={14} />
+                </a>
+                <a
+                  href="https://youtube.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-8 h-8 rounded border border-border-dark flex items-center justify-center text-secondary-text hover:text-primary hover:border-primary transition-colors text-xs font-bold"
+                  aria-label="YouTube"
+                >
+                  ▶
+                </a>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h5 className="text-[15px] font-bold text-foreground">
+                Carteiras compatíveis
+              </h5>
+              <div className="inline-block px-3 py-1.5 rounded-full border border-border-dark bg-surface-dark text-[9px] font-bold uppercase tracking-widest text-secondary-text">
+                METAMASK &nbsp;•&nbsp; WALLETCONNECT &nbsp;•&nbsp; COINBASE
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Rodapé Final com Carteiras e Copyright */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-border-dark">
-          {/* Badge de Carteiras */}
-          <div className="flex items-center gap-3 px-4 py-2 rounded-full border border-border-soft bg-surface-dark text-[10px] uppercase tracking-wider text-secondary-text">
-            <span className="font-bold text-foreground">
-              Carteiras Suportadas:
-            </span>
-            <div className="flex items-center gap-2">
-              <span className="flex items-center gap-1">
-                <MetaMaskIcon size={14} /> MetaMask
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-1">
-                <WalletConnectIcon size={14} /> WalletConnect
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-1">
-                <CoinbaseIcon size={14} /> Coinbase
-              </span>
-            </div>
-          </div>
-
-          <p className="text-xs text-secondary-color text-center md:text-right">
-            © 2026 KURIO. Todos os direitos reservados.
+        <div className="pt-8 border-t border-border-dark/30 text-center">
+          <p className="text-xs text-secondary-text">
+            © 2026 Kurio. Propriedade digital para todos.
           </p>
         </div>
       </div>

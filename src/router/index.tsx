@@ -6,6 +6,13 @@ import {
 import { RootLayout } from "@/components/layout/RootLayout";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { RoutePlaceholderPage } from "@/pages/RoutePlaceholderPage";
+import { HomePage } from "@/pages/HomePage";
+import { LoginPage } from "@/pages/LoginPage";
+import { RegisterPage } from "@/pages/RegisterPage";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+
+import type { CatalogSearchParams } from "@/features/catalog/types";
+import type { NftCategory, NftSortOption, NftStatus } from "@/contracts";
 
 const rootRoute = createRootRoute({
   component: RootLayout,
@@ -15,13 +22,25 @@ const rootRoute = createRootRoute({
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: () => (
-    <RoutePlaceholderPage
-      title="Catálogo & Destaques de NFTs"
-      description="Bem-vindo à Kurio. Navegue pelas coleções verificadas, novos lançamentos e drops exclusivos."
-      routePath="/"
-    />
-  ),
+  component: HomePage,
+  validateSearch: (search: Record<string, unknown>): CatalogSearchParams => ({
+    search: typeof search.search === "string" ? search.search : undefined,
+    category:
+      typeof search.category === "string"
+        ? (search.category as NftCategory)
+        : undefined,
+    status:
+      typeof search.status === "string"
+        ? (search.status as NftStatus)
+        : undefined,
+    priceMin: typeof search.priceMin === "string" ? search.priceMin : undefined,
+    priceMax: typeof search.priceMax === "string" ? search.priceMax : undefined,
+    sort:
+      typeof search.sort === "string"
+        ? (search.sort as NftSortOption)
+        : undefined,
+    page: search.page ? Number(search.page) : undefined,
+  }),
 });
 
 const marketRoute = createRoute({
@@ -64,11 +83,13 @@ const checkoutRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/pagamento",
   component: () => (
-    <RoutePlaceholderPage
-      title="Checkout & Pagamento"
-      description="Conecte sua carteira Web3 ou escolha seu método de pagamento preferido."
-      routePath="/pagamento"
-    />
+    <ProtectedRoute>
+      <RoutePlaceholderPage
+        title="Checkout & Pagamento"
+        description="Conecte sua carteira Web3 ou escolha seu método de pagamento preferido."
+        routePath="/pagamento"
+      />
+    </ProtectedRoute>
   ),
 });
 
@@ -87,36 +108,35 @@ const confirmationRoute = createRoute({
 const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/login",
-  component: () => (
-    <RoutePlaceholderPage
-      title="Conectar Carteira / Login"
-      description="Acesse sua conta ou assine uma mensagem criptográfica com sua carteira."
-      routePath="/login"
-    />
-  ),
+  component: LoginPage,
+  validateSearch: (
+    search: Record<string, unknown>,
+  ): { redirect?: string; reason?: string } => ({
+    redirect: typeof search.redirect === "string" ? search.redirect : undefined,
+    reason: typeof search.reason === "string" ? search.reason : undefined,
+  }),
 });
 
 const registerRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/cadastro",
-  component: () => (
-    <RoutePlaceholderPage
-      title="Criar Conta de Colecionador"
-      description="Cadastre-se na Kurio para colecionar, cunhar e negociar ativos digitais."
-      routePath="/cadastro"
-    />
-  ),
+  component: RegisterPage,
+  validateSearch: (search: Record<string, unknown>): { redirect?: string } => ({
+    redirect: typeof search.redirect === "string" ? search.redirect : undefined,
+  }),
 });
 
 const profileRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/perfil",
   component: () => (
-    <RoutePlaceholderPage
-      title="Perfil do Colecionador"
-      description="Gerencie sua coleção, histórico de atividades e configurações de perfil."
-      routePath="/perfil"
-    />
+    <ProtectedRoute>
+      <RoutePlaceholderPage
+        title="Perfil do Colecionador"
+        description="Gerencie sua coleção, histórico de atividades e configurações de perfil."
+        routePath="/perfil"
+      />
+    </ProtectedRoute>
   ),
 });
 
@@ -124,11 +144,13 @@ const walletsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/carteiras",
   component: () => (
-    <RoutePlaceholderPage
-      title="Minhas Carteiras Web3"
-      description="Vincule carteiras MetaMask, WalletConnect ou Coinbase à sua conta."
-      routePath="/carteiras"
-    />
+    <ProtectedRoute>
+      <RoutePlaceholderPage
+        title="Minhas Carteiras Web3"
+        description="Vincule carteiras MetaMask, WalletConnect ou Coinbase à sua conta."
+        routePath="/carteiras"
+      />
+    </ProtectedRoute>
   ),
 });
 
