@@ -153,7 +153,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  to="/favoritos"
+                  to="/perfil"
                   className="text-secondary-text hover:text-foreground transition-colors"
                 >
                   Lista de interesse

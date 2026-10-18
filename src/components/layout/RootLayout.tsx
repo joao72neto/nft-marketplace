@@ -1,6 +1,7 @@
 import { Outlet } from "@tanstack/react-router";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { AuthModal } from "@/components/auth/AuthModal";
 
 export function RootLayout() {
   return (
@@ -10,6 +11,7 @@ export function RootLayout() {
         <Outlet />
       </main>
       <Footer />
+      <AuthModal />
     </div>
   );
 }

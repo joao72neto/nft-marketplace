@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import type { NftCategory, NftStatus } from "@/contracts";
 
 export interface CatalogSidebarFiltersProps {
@@ -65,21 +65,20 @@ export const CatalogSidebarFilters: React.FC<CatalogSidebarFiltersProps> = ({
     return !isNaN(parsed) && parsed <= MAX_LIMIT ? parsed : 12.3;
   });
 
-  useEffect(() => {
-    if (priceMin !== undefined) {
-      const parsed = Number(priceMin);
-      if (!isNaN(parsed)) setSliderMin(parsed);
-    } else {
-      setSliderMin(0.02);
-    }
+  const [prevPriceMin, setPrevPriceMin] = useState(priceMin);
+  const [prevPriceMax, setPrevPriceMax] = useState(priceMax);
 
-    if (priceMax !== undefined) {
-      const parsed = Number(priceMax);
-      if (!isNaN(parsed)) setSliderMax(parsed);
-    } else {
-      setSliderMax(12.3);
-    }
-  }, [priceMin, priceMax]);
+  if (priceMin !== prevPriceMin) {
+    setPrevPriceMin(priceMin);
+    const parsed = Number(priceMin);
+    setSliderMin(!isNaN(parsed) && parsed >= MIN_LIMIT ? parsed : 0.02);
+  }
+
+  if (priceMax !== prevPriceMax) {
+    setPrevPriceMax(priceMax);
+    const parsed = Number(priceMax);
+    setSliderMax(!isNaN(parsed) && parsed <= MAX_LIMIT ? parsed : 12.3);
+  }
 
   const handleMinSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = Math.min(Number(e.target.value), sliderMax - 0.01);

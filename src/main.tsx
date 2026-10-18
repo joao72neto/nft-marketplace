@@ -6,7 +6,7 @@ import { queryClient } from "@/lib/query-client";
 import { router } from "@/router";
 import { enableMocking } from "@/mocks/browser";
 import { socketClient } from "@/lib/socket-client";
-import { AuthProvider } from "@/features/auth/auth-context";
+import { AuthProvider, AuthModalProvider } from "@/features/auth";
 import { DevToolbar } from "@/components/dev/DevToolbar";
 import "@/index.css";
 
@@ -23,8 +23,10 @@ enableMocking().finally(() => {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <RouterProvider router={router} />
-          <DevToolbar />
+          <AuthModalProvider>
+            <RouterProvider router={router} />
+            <DevToolbar />
+          </AuthModalProvider>
         </AuthProvider>
       </QueryClientProvider>
     </StrictMode>,

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useSearch } from "@tanstack/react-router";
-import { useAuth } from "@/features/auth";
+import { useNavigate, useSearch } from "@tanstack/react-router";
+import { useAuth, useAuthModal } from "@/features/auth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import type { ApiErrorResponse } from "@/contracts";
 
 export const RegisterPage: React.FC = () => {
   const { register } = useAuth();
+  const { openLoginModal } = useAuthModal();
   const navigate = useNavigate();
   const search = useSearch({ from: "/cadastro" });
 
@@ -234,13 +235,13 @@ export const RegisterPage: React.FC = () => {
 
         <div className="mt-8 pt-6 border-t border-border-dark text-center text-xs text-secondary-text">
           <span>Já possui uma conta? </span>
-          <Link
-            to="/login"
-            search={search.redirect ? { redirect: search.redirect } : {}}
+          <button
+            type="button"
+            onClick={() => openLoginModal(search.redirect)}
             className="font-bold text-accent hover:underline ml-1"
           >
             Entrar
-          </Link>
+          </button>
         </div>
       </div>
     </div>

@@ -7,9 +7,9 @@ import { RootLayout } from "@/components/layout/RootLayout";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { RoutePlaceholderPage } from "@/pages/RoutePlaceholderPage";
 import { HomePage } from "@/pages/HomePage";
-import { LoginPage } from "@/pages/LoginPage";
 import { RegisterPage } from "@/pages/RegisterPage";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { LoginRedirect } from "@/components/auth/LoginRedirect";
 
 import type { CatalogSearchParams } from "@/features/catalog/types";
 import type { NftCategory, NftSortOption, NftStatus } from "@/contracts";
@@ -108,7 +108,7 @@ const confirmationRoute = createRoute({
 const loginRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/login",
-  component: LoginPage,
+  component: LoginRedirect,
   validateSearch: (
     search: Record<string, unknown>,
   ): { redirect?: string; reason?: string } => ({

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { MenuIcon, LogoutIcon, CartIcon } from "@/components/icons";
-import { useAuth } from "@/features/auth";
+import { useAuth, useAuthModal } from "@/features/auth";
 
 interface MobileNavProps {
   cartCount?: number;
@@ -20,6 +20,7 @@ export function MobileNav({ cartCount = 0 }: MobileNavProps) {
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
   const { user, isAuthenticated, logout } = useAuth();
+  const { openLoginModal } = useAuthModal();
 
   const navLinks = [
     { label: "Início", href: "/" },
@@ -135,15 +136,17 @@ export function MobileNav({ cartCount = 0 }: MobileNavProps) {
             </Button>
           ) : (
             <Button
-              asChild
+              type="button"
               variant="primary"
               size="lg"
-              className="w-full justify-center"
+              className="w-full justify-center gap-2"
+              onClick={() => {
+                setOpen(false);
+                openLoginModal();
+              }}
             >
-              <Link to="/login" onClick={() => setOpen(false)}>
-                <LogoutIcon size={18} />
-                <span>Entrar</span>
-              </Link>
+              <LogoutIcon size={18} />
+              <span>Entrar</span>
             </Button>
           )}
         </div>

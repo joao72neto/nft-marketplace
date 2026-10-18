@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { SearchIcon, CartIcon, LogoutIcon } from "@/components/icons";
 import { MobileNav } from "@/components/layout/MobileNav";
-import { useAuth } from "@/features/auth";
+import { useAuth, useAuthModal } from "@/features/auth";
 import { UserMenu } from "@/components/layout/UserMenu";
 
 interface HeaderProps {
@@ -15,6 +15,7 @@ export function Header({ cartCount = 0 }: HeaderProps) {
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
   const { isAuthenticated, isLoading } = useAuth();
+  const { openLoginModal } = useAuthModal();
 
   const isHome = currentPath === "/";
   const isMarket = currentPath.startsWith("/mercado");
@@ -109,15 +110,14 @@ export function Header({ cartCount = 0 }: HeaderProps) {
                   <UserMenu />
                 ) : (
                   <Button
-                    asChild
+                    type="button"
                     variant="primary"
                     size="md"
                     className="gap-2 px-5"
+                    onClick={() => openLoginModal()}
                   >
-                    <Link to="/login">
-                      <LogoutIcon size={18} />
-                      <span>Entrar</span>
-                    </Link>
+                    <LogoutIcon size={18} />
+                    <span>Entrar</span>
                   </Button>
                 )}
               </>

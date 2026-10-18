@@ -1,6 +1,12 @@
 import type { EthAmount } from "./common";
 
-export type NftCategory = "novos-lancamentos" | "em-alta";
+export type NftCategory =
+  | "novos-lancamentos"
+  | "em-alta"
+  | "art"
+  | "collectibles"
+  | "music"
+  | "photography";
 
 export type NftStatus = "all" | "on_sale" | "last_editions" | "sold_out";
 
